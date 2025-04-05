@@ -1,0 +1,202 @@
+{
+	"info": {
+		"_postman_id": "e8f8f8f8-f8f8-f8f8-f8f8-f8f8f8f8f8f8",
+		"name": "Auth Service Tests",
+		"description": "测试认证服务的API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "用户注册",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// 检查状态码是否为200 OK",
+							"pm.test(\"状态码是 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"// 检查响应体是否包含成功消息",
+							"pm.test(\"注册成功\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.message).to.eql(\"User registered successfully\");",
+							"});",
+							"",
+							"// 保存用户名和密码以供登录测试使用",
+							"var requestBody = JSON.parse(pm.request.body.raw);",
+							"pm.environment.set(\"username\", requestBody.username);",
+							"pm.environment.set(\"password\", requestBody.password);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"testuser\",\n    \"password\": \"password123\"\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/api/auth/register",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"auth",
+						"register"
+					]
+				},
+				"description": "注册新用户"
+			},
+			"response": []
+		},
+		{
+			"name": "用户登录",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// 检查状态码是否为200 OK",
+							"pm.test(\"状态码是 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"// 检查响应体是否包含JWT令牌",
+							"pm.test(\"响应包含JWT令牌\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.token).to.exist;",
+							"    pm.expect(jsonData.token).to.be.a('string');",
+							"    pm.expect(jsonData.token.length).to.be.greaterThan(10);",
+							"});",
+							"",
+							"// 保存令牌以供后续请求使用",
+							"var jsonData = pm.response.json();",
+							"pm.environment.set(\"jwt_token\", jsonData.token);",
+							"",
+							"// 验证JWT令牌格式 (简单验证)",
+							"pm.test(\"JWT令牌格式正确\", function () {",
+							"    var token = jsonData.token;",
+							"    var tokenParts = token.split('.');",
+							"    pm.expect(tokenParts.length).to.equal(3);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"{{username}}\",\n    \"password\": \"{{password}}\"\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/api/auth/login",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"auth",
+						"login"
+					]
+				},
+				"description": "使用用户名和密码登录"
+			},
+			"response": []
+		},
+		{
+			"name": "使用错误凭据登录",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// 检查状态码是否为401 Unauthorized或400 Bad Request",
+							"pm.test(\"登录失败返回适当的错误状态码\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([400, 401]);",
+							"});",
+							"",
+							"// 检查响应体是否包含错误消息",
+							"pm.test(\"响应包含错误消息\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.error || jsonData.message).to.exist;",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"{{username}}\",\n    \"password\": \"wrongpassword\"\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/api/auth/login",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"auth",
+						"login"
+					]
+				},
+				"description": "使用错误的密码尝试登录"
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:8080",
+			"type": "string"
+		}
+	]
+}

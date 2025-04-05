@@ -1,0 +1,53 @@
+// 深色主题变量
+$dark-bg-color: #1f1f1f;
+$dark-text-color: #ffffff;
+$dark-text-color-secondary: #a0a0a0;
+$dark-border-color: #4c4c4c;
+$dark-menu-bg: #1f1f1f;
+$dark-menu-text: #bfcbd9;
+$dark-menu-active: var(--primary-color);
+
+// 深色主题样式
+.dark-mode {
+  background-color: $dark-bg-color;
+  color: $dark-text-color;
+
+  .el-container {
+    background-color: $dark-bg-color;
+  }
+
+  .el-aside {
+    background-color: $dark-menu-bg;
+  }
+
+  .el-header {
+    background-color: $dark-bg-color;
+    border-color: $dark-border-color;
+  }
+
+  .el-main {
+    background-color: $dark-bg-color;
+  }
+
+  .el-menu {
+    background-color: $dark-menu-bg;
+    border-right: 1px solid $dark-border-color;
+
+    .el-menu-item {
+      color: $dark-menu-text;
+      &:hover {
+        background-color: lighten($dark-menu-bg, 10%);
+      }
+      &.is-active {
+        background-color: var(--primary-color);
+        color: #fff;
+      }
+    }
+  }
+
+  .el-card {
+    background-color: lighten($dark-bg-color, 5%);
+    border-color: $dark-border-color;
+    color: $dark-text-color;
+  }
+}

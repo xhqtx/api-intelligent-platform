@@ -1,0 +1,133 @@
+@import './variables.scss';
+@import './mixins.scss';
+@import './transitions.scss';
+@import './responsive.scss';
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: $font-family;
+  font-size: $font-size-base;
+  line-height: $line-height-base;
+  color: var(--text-color);
+  background-color: var(--bg-color);
+}
+
+#app {
+  height: 100%;
+  @include flex-column;
+}
+
+.app-container {
+  padding: $container-padding;
+  @include flex-column;
+  flex: 1;
+}
+
+// 全局滚动条样式
+body {
+  @include custom-scrollbar;
+}
+
+// 全局卡片样式
+.el-card {
+  @include card-base;
+  margin-bottom: $spacing-medium;
+}
+
+// 全局按钮样式增强
+.el-button {
+  @include transition(background-color, box-shadow);
+  
+  &:not(.is-disabled):hover {
+    @include elevation(2);
+  }
+  
+  &--primary {
+    @include theme-variant(background-color, primary);
+    @include theme-variant(border-color, primary);
+  }
+}
+
+// 全局表格样式增强
+.el-table {
+  th {
+    background-color: var(--bg-color-secondary);
+    font-weight: $font-weight-bold;
+  }
+  
+  td, th {
+    padding: $spacing-small $spacing-base;
+  }
+}
+
+// 全局表单样式增强
+.el-form-item__label {
+  font-weight: $font-weight-medium;
+}
+
+// 全局图标样式
+.el-icon {
+  vertical-align: middle;
+}
+
+// 响应式布局
+@include respond-to('md') {
+  .hidden-sm-and-down {
+    display: none !important;
+  }
+}
+
+@include respond-to('lg') {
+  .hidden-md-and-up {
+    display: none !important;
+  }
+}
+
+// 应用全局过渡动画
+@include page-transition;
+
+// 全局提示样式
+.el-message {
+  @include elevation(3);
+}
+
+// 全局加载样式
+.el-loading-mask {
+  background-color: rgba(255, 255, 255, 0.8);
+}
+
+// 全局弹窗样式
+.el-dialog {
+  @include card-base;
+  @include elevation(4);
+}
+
+// 全局下拉菜单样式
+.el-dropdown-menu {
+  @include card-base;
+  @include elevation(2);
+}
+
+// 全局面包屑样式
+.el-breadcrumb {
+  font-size: $font-size-small;
+  margin-bottom: $spacing-medium;
+}
+
+// 全局分页样式
+.el-pagination {
+  margin-top: $spacing-large;
+  justify-content: flex-end;
+}
+
+// 响应式网格系统
+.grid-container {
+  @include grid-container;
+}
+
+// 主题切换过渡
+body {
+  @include transition(background-color, color);
+}

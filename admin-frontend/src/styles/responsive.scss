@@ -1,0 +1,111 @@
+// 响应式断点
+$breakpoints: (
+  'xs': 480px,
+  'sm': 768px,
+  'md': 992px,
+  'lg': 1200px,
+  'xl': 1600px
+);
+
+// 媒体查询混合器
+@mixin respond-to($breakpoint) {
+  @if map-has-key($breakpoints, $breakpoint) {
+    @media screen and (max-width: map-get($breakpoints, $breakpoint)) {
+      @content;
+    }
+  } @else {
+    @warn "未定义的断点: #{$breakpoint}";
+  }
+}
+
+// 移动端适配
+@include respond-to('sm') {
+  .el-container {
+    flex-direction: column !important;
+  }
+
+  .el-aside {
+    width: 100% !important;
+    max-height: 60px;
+    overflow: hidden;
+    
+    &.expanded {
+      max-height: none;
+    }
+  }
+
+  .el-menu {
+    border-right: none !important;
+  }
+
+  .el-main {
+    padding: 12px !important;
+  }
+
+  .el-table {
+    width: 100%;
+    overflow-x: auto;
+  }
+
+  .el-dialog {
+    width: 90% !important;
+    margin: 10vh auto !important;
+  }
+
+  .el-form-item {
+    margin-bottom: 12px !important;
+  }
+}
+
+// 紧凑模式
+.compact-mode {
+  .el-main {
+    padding: 12px;
+  }
+
+  .el-card {
+    margin-bottom: 12px;
+  }
+
+  .el-form-item {
+    margin-bottom: 12px;
+  }
+
+  .el-table {
+    .el-table__cell {
+      padding: 6px 0;
+    }
+  }
+
+  .el-pagination {
+    margin-top: 12px;
+  }
+}
+
+// 深色模式
+.dark-mode {
+  --el-bg-color: #1a1a1a;
+  --el-text-color-primary: #ffffff;
+  --el-text-color-regular: #e0e0e0;
+  --el-border-color: #333333;
+  --el-fill-color-blank: #1a1a1a;
+  
+  .el-card,
+  .el-table,
+  .el-pagination {
+    background-color: #242424;
+  }
+
+  .el-table {
+    --el-table-border-color: #333333;
+    --el-table-header-bg-color: #1a1a1a;
+    --el-table-row-hover-bg-color: #2a2a2a;
+  }
+
+  .el-input__inner,
+  .el-textarea__inner {
+    background-color: #242424;
+    border-color: #333333;
+    color: #ffffff;
+  }
+}

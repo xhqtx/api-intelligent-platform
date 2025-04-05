@@ -1,0 +1,70 @@
+// 页面切换动画
+.fade-transform-leave-active,
+.fade-transform-enter-active {
+  transition: all 0.3s;
+}
+
+.fade-transform-enter-from {
+  opacity: 0;
+  transform: translateX(-30px);
+}
+
+.fade-transform-leave-to {
+  opacity: 0;
+  transform: translateX(30px);
+}
+
+// 淡入淡出动画
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
+// 缩放动画
+.scale-enter-active,
+.scale-leave-active {
+  transition: all 0.3s ease;
+}
+
+.scale-enter-from,
+.scale-leave-to {
+  opacity: 0;
+  transform: scale(0.9);
+}
+
+// 滑动动画
+.slide-enter-active,
+.slide-leave-active {
+  transition: all 0.3s ease-out;
+}
+
+.slide-enter-from {
+  transform: translateY(-30px);
+  opacity: 0;
+}
+
+.slide-leave-to {
+  transform: translateY(30px);
+  opacity: 0;
+}
+
+// 移动端适配动画
+@media (max-width: 768px) {
+  .fade-transform-enter-from {
+    transform: translateX(100%);
+  }
+  
+  .fade-transform-leave-to {
+    transform: translateX(-100%);
+  }
+  
+  .slide-enter-from,
+  .slide-leave-to {
+    transform: translateY(100%);
+  }
+}

@@ -1,0 +1,57 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: bigdata
+      MYSQL_DATABASE: auth_db
+    volumes:
+      - mysql_data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+
+  redis:
+    image: redis:alpine
+    ports:
+      - "6379:6379"
+
+  auth-service:
+    build:
+      context: ./auth-service
+      dockerfile: Dockerfile
+    depends_on:
+      - mysql
+      - redis
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:p6spy:mysql://mysql:3306/auth_db?createDatabaseIfNotExist=true&useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: bigdata
+      SPRING_DATA_REDIS_HOST: redis
+    ports:
+      - "8081:8081"
+
+  gateway-service:
+    build:
+      context: ./gateway-service
+      dockerfile: Dockerfile
+    depends_on:
+      - auth-service
+      - redis
+    environment:
+      SPRING_DATA_REDIS_HOST: redis
+      WAIT_HOSTS: auth-service:8081
+    ports:
+      - "8080:8080"
+
+  admin-frontend:
+    build:
+      context: ./admin-frontend
+      dockerfile: Dockerfile
+    depends_on:
+      - gateway-service
+    ports:
+      - "80:80"
+
+volumes:
+  mysql_data:

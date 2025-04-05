@@ -1,0 +1,112 @@
+// 颜色
+// 主色系 - 冷色调主题
+$primary-color: #1890ff; // 主色调改为更专业的蓝色
+$success-color: #52c41a;
+$warning-color: #faad14;
+$danger-color: #f5222d;
+$info-color: #909399;
+
+// 文本色系
+$text-color: #303133;
+$text-color-secondary: #909399;
+$text-color-placeholder: #c0c4cc;
+$text-color-disabled: #c0c4cc;
+
+// 背景色系
+$bg-color: #f5f7fa;
+$bg-color-secondary: #ebeef5;
+$bg-color-page: #f0f2f5;
+
+// 边框色系
+$border-color: #dcdfe6;
+$border-color-light: #e4e7ed;
+$border-color-lighter: #ebeef5;
+
+// 主题色变量
+$theme-colors: (
+  'primary': $primary-color,
+  'success': $success-color,
+  'warning': $warning-color,
+  'danger': $danger-color,
+  'info': $info-color
+);
+
+// 字体
+$font-family: 'Helvetica Neue', Helvetica, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', '微软雅黑', Arial, sans-serif;
+$font-size-extra-small: 12px;
+$font-size-small: 13px;
+$font-size-base: 14px;
+$font-size-medium: 16px;
+$font-size-large: 18px;
+$font-size-extra-large: 20px;
+
+$font-weight-light: 300;
+$font-weight-normal: 400;
+$font-weight-medium: 500;
+$font-weight-bold: 700;
+
+$line-height-tight: 1.2;
+$line-height-base: 1.5;
+$line-height-loose: 1.8;
+
+// 布局
+$header-height: 60px;
+$sidebar-width: 220px; // 稍微加宽以提供更好的导航体验
+$sidebar-collapsed-width: 64px;
+$footer-height: 60px;
+$container-padding: 20px;
+$card-padding: 16px;
+
+// 响应式断点
+$breakpoint-xs: 480px;
+$breakpoint-sm: 768px;
+$breakpoint-md: 992px;
+$breakpoint-lg: 1200px;
+
+// 阴影
+$box-shadow-base: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);
+$box-shadow-light: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+$box-shadow-lighter: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
+$box-shadow-dark: 0 4px 16px rgba(0, 0, 0, 0.15);
+$box-shadow-card: 0 1px 2px -2px rgba(0, 0, 0, 0.16),
+                  0 3px 6px 0 rgba(0, 0, 0, 0.12),
+                  0 5px 12px 4px rgba(0, 0, 0, 0.09);
+
+// 过渡
+$transition-base: all .3s cubic-bezier(.645,.045,.355,1);
+$transition-fast: all .2s cubic-bezier(.645,.045,.355,1);
+$transition-slow: all .5s cubic-bezier(.645,.045,.355,1);
+$transition-linear: all .3s linear;
+$transition-ease: all .3s ease;
+$transition-ease-in: all .3s ease-in;
+$transition-ease-out: all .3s ease-out;
+
+// 滚动条
+$scrollbar-thumb-color: #C0C4CC;
+$scrollbar-track-color: #F5F7FA;
+
+// z-index
+$z-index-normal: 1;
+$z-index-dropdown: 1000;
+$z-index-sticky: 1020;
+$z-index-fixed: 1030;
+$z-index-modal-backdrop: 1040;
+$z-index-modal: 1050;
+$z-index-popover: 1060;
+$z-index-tooltip: 1070;
+$z-index-notification: 1080;
+
+// 圆角
+$border-radius-small: 2px;
+$border-radius-base: 4px;
+$border-radius-medium: 6px;
+$border-radius-large: 8px;
+$border-radius-circle: 50%;
+
+// 间距
+$spacing-mini: 4px;
+$spacing-small: 8px;
+$spacing-base: 12px;
+$spacing-medium: 16px;
+$spacing-large: 24px;
+$spacing-extra-large: 32px;

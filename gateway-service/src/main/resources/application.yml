@@ -1,0 +1,71 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: gateway-service
+  data:
+    redis:
+      host: localhost
+      port: 6379
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: ${jwt.issuer}
+  cloud:
+    gateway:
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins:
+              - "http://localhost:3000"
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+              - OPTIONS
+            allowedHeaders: "*"
+            allowCredentials: true
+      routes:
+        - id: auth-service
+          uri: http://localhost:8081
+          predicates:
+            - Path=/auth/**
+          filters:
+            - StripPrefix=1
+            - RemoveRequestHeader=Cookie
+            - RemoveRequestHeader=Set-Cookie
+            - name: RequestRateLimiter
+              args:
+                redis-rate-limiter.replenishRate: 10
+                redis-rate-limiter.burstCapacity: 20
+                redis-rate-limiter.requestedTokens: 1
+                key-resolver: "#{@ipKeyResolver}"
+
+jwt:
+  secret: MvYC0Ut3kymwC2UQ5BytxGCwM22h1hVpL0M/aeQzuCLk7qY7zX3RDNN9EuIb/yGj/+283hXgqW1yVWIiBQvcbA==
+  expiration: 86400000 # 24 hours
+  refresh-token:
+    expiration: 604800000 # 7 days
+  issuer: api-platform
+  headerString: Authorization
+  tokenPrefix: Bearer 
+
+logging:
+  level:
+    org.springframework.cloud.gateway: INFO
+    org.springframework.security: INFO
+    com.example.gateway: INFO
+    reactor.netty: INFO
+    org.springframework.web.server.adapter.HttpWebHandlerAdapter: INFO
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      show-details: when_authorized

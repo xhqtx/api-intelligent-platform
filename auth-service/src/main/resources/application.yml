@@ -1,0 +1,42 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: auth-service
+  datasource:
+    url: jdbc:p6spy:mysql://localhost:3306/auth_db?createDatabaseIfNotExist=true&useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+    driverClassName: com.p6spy.engine.spy.P6SpyDriver
+    username: root
+    password: bigdata
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+        show_sql: true
+        use_sql_comments: true
+  data:
+    redis:
+      timeout: 60000
+      database: 0
+      port: 6379
+      host: localhost
+
+jwt:
+  secret: MvYC0Ut3kymwC2UQ5BytxGCwM22h1hVpL0M/aeQzuCLk7qY7zX3RDNN9EuIb/yGj/+283hXgqW1yVWIiBQvcbA==
+  expiration: 86400000 # 24 hours
+  refresh-token:
+    expiration: 604800000 # 7 days
+  issuer: api-platform
+
+logging:
+  level:
+    org.springframework.security: DEBUG
+    com.example.auth: DEBUG
+    p6spy: INFO
+
+security:
+  require-ssl: false
